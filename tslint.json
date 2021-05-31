@@ -1,0 +1,80 @@
+{
+	"extends": "tslint:recommended",
+	"rules": {
+		"completed-docs": [
+			true,
+			{
+				"properties": {
+					"privacies": ["public", "protected"],
+					"tags": { "content": { "see": ["#.*"] }, "existence": ["inheritdoc"] }
+				},
+				"methods": {
+					"privacies": ["public", "protected"],
+					"visibility": ["exported"]
+				},
+				"enums": true,
+				"functions": {
+					"tags": {
+						"existence": ["inheritdoc", "see"],
+						"content": ["params"]
+					},
+					"visibilities": ["all"]
+				},
+				"classes": true,
+				"instances": false,
+				"interfaces": true,
+				"namespaces": true,
+				"types": true
+			}
+		],
+		"member-ordering": [
+			true,
+			{
+				"order": [
+					"private-static-field",
+					"private-instance-field",
+					"public-static-field",
+					"public-instance-field",
+					"public-constructor",
+					"private-constructor",
+					"private-instance-method",
+					"protected-instance-method",
+					"public-instance-method"
+				],
+				"alphabetize": false
+			}
+		],
+		"max-line-length": {
+			"options": [100]
+		},
+		"member-access": false,
+		"one-variable-per-declaration": false,
+		"variable-name": false,
+		"file-header": true,
+		"only-arrow-functions": true,
+		"semicolon": false,
+		"indent": true,
+		"trailing-comma": false,
+		"object-literal-sort-keys": false,
+		"object-literal-key-quotes": false,
+		"ordered-imports": false,
+		"quotemark": false,
+		"no-arg": true,
+		"no-bitwise": false,
+		"no-unused-variable": true,
+		"no-conditional-assignment": true,
+		"no-consecutive-blank-lines": true,
+		"no-trailing-whitespace": true,
+		"no-namespace": false,
+		"no-var-requires": false,
+		"no-console": {
+			"severity": "warning",
+			"options": ["debug", "info", "log", "time", "timeEnd", "trace"]
+		}
+	},
+	"jsRules": {
+		"max-line-length": {
+			"options": [100]
+		}
+	}
+}
