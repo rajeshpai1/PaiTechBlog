@@ -5,7 +5,7 @@ import Loader from "react-loader-spinner";
 import React  from 'react';
 import * as _ from 'lodash';
 
-export const BooksList = () => {
+export const BookItem = () => {
   const { data, error, isLoading, isError } = useQuery("articles", getAllBooks);
 
   if (isLoading) {
@@ -23,13 +23,13 @@ export const BooksList = () => {
     console.log("sfdfsdfsfd", data.title)
     return (    <div className="band">
 
-    { _.map([data[0]],(data, index) => { return <BookItem data={data} ind={index} />})}</div>
+    { _.map([data[0]],(data, index) => { return <BookItemSingle data={data} ind={index} />})}</div>
   )
   }
   
 };
 
-const BookItem = ({data, ind}) => {
+const BookItemSingle = ({data, ind}) => {
   return (
         <div className={"item-" + (Number(ind)+1).toString()}>
           <a href={data.url} className="card">

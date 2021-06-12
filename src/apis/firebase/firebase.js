@@ -1,14 +1,47 @@
-const firebase = require("firebase")
+var admin = require("firebase-admin");
 
-var config = {
-    apiKey: "AIzaSyANd_hXX9kx_WMdfkcFmvTs13QsjUoQB9M",
-    authDomain: "paitechblog.firebaseapp.com",
-    // For databases not in the us-central1 location, databaseURL will be of the
-    // form https://[databaseName].[region].firebasedatabase.app.
-    // For example, https://your-database-123.europe-west1.firebasedatabase.app
-    databaseURL: "https://databaseName.firebaseio.com",
-    storageBucket: "bucket.appspot.com"
-  };
-  const app = firebase.initializeApp(config);
+var serviceAccount = require("../../../paitechblog-firebase-adminsdk-zcnr9-bee94f41fb.json");
 
-module.export = app
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://paitechblog-default-rtdb.firebaseio.com"
+});
+
+var db = admin.database();
+// var ref = db.ref("restricted_access/secret_document");
+// ref.once("value", function(snapshot) {
+//   console.log(snapshot.val());
+// });
+
+const functions = require('firebase-functions');
+const app = require('express')();
+
+const {
+    getAllTodos
+} = require('./APIs/todos')
+
+app.get('/todos', getAllTodos);
+exports.api = functions.https.onRequest(app);
+
+exports.getAllTodos = (request, response) => {
+	db
+		.collection('todos')
+		.orderBy('createdAt', 'desc')
+		.get()
+		.then((data) => {
+			let todos = [];
+			data.forEach((doc) => {
+				todos.push({
+                    todoId: doc.id,
+                    title: doc.data().title,
+					body: doc.data().body,
+					createdAt: doc.data().createdAt,
+				});
+			});
+			return response.json(todos);
+		})
+		.catch((err) => {
+			console.error(err);
+			return response.status(500).json({ error: err.code});
+		});
+};

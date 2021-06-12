@@ -1,4 +1,5 @@
 import { BooksList } from "../BooksList";
+import { BookItem } from "../BookItem"
 // import { CreateBook } from "./CreateBook";
 // import { UpdateBook } from "./UpdateBook";
 import React, { Component }  from 'react';
@@ -17,6 +18,9 @@ function App() {
         </Route> */}
         <Route path="/">
           <BooksList />
+        </Route>
+        <Route path="/BookItem">
+          <BookItem />
         </Route>
       </Switch>
     </>

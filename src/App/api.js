@@ -1,43 +1,45 @@
 export const getAllBooks = async () => {
   const response = await fetch('https://paitechblog-default-rtdb.firebaseio.com/articles.json');
 
-  if (!response) {
+  console.log("getAllBooks apois ", response)
+
+  if (!response.ok) {
     throw new Error("Something went wrong.");
   }
-  console.log(response)
-  return response;
+  
+  return response.json();
 };
 
-// export const getBook = async ({ queryKey }) => {
-//   /* eslint-disable no-unused-vars */
-//   const [_key, { id }] = queryKey;
-//   const response = await fetch(`${process.env.REACT_APP_API_SERVER}/books/${id}`);
+export const getBook = async ({ queryKey }) => {
+  /* eslint-disable no-unused-vars */
+  // const [_key, { id }] = queryKey;
+  const response = await fetch('https://paitechblog-default-rtdb.firebaseio.com/articles.json');
 
-//   if (!response.ok) {
-//     throw new Error(response.json().message);
-//   }
+  if (!response.ok) {
+    throw new Error(response.json().message);
+  }
 
-//   return response.json();
-// };
+  return response.json();
+};
 
-// export const updateBook = async ({ id, ...data }) => {
-//   const response = await fetch(
-//     `${process.env.REACT_APP_API_SERVER}/books/${id}`,
-//     {
-//       method: "PUT",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify(data),
-//     }
-//   );
+export const updateBook = async ({ id, ...data }) => {
+  const response = await fetch(
+    `${process.env.REACT_APP_API_SERVER}/books/${id}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }
+  );
 
-//   if (!response.ok) {
-//     throw new Error(response.json().message);
-//   }
+  if (!response.ok) {
+    throw new Error(response.json().message);
+  }
 
-//   return response.json();
-// };
+  return response.json();
+};
 
 // export const createBook = async ({ ...data }) => {
 //   const response = await fetch(

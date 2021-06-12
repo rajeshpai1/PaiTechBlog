@@ -1,33 +1,41 @@
 import { Flex } from "rebass/styled-components";
-// import { Container } from "../shared"
 import { useQuery } from "react-query";
 import { getAllBooks } from "../App/api";
-import { BookItem } from "./BookItem";
 import Loader from "react-loader-spinner";
-import React, { Component }  from 'react';
+import React  from 'react';
+import * as _ from 'lodash';
 
 export const BooksList = () => {
-  const { data, error, isLoading, isError ,isSuccess} = useQuery("articles", getAllBooks);
+  const { data, error, isLoading, isError } = useQuery("articles", getAllBooks);
 
   if (isLoading) {
     return (
-      // <Container>
         <Flex py="5" justifyContent="center">
           <Loader type="ThreeDots" color="#cccccc" height={30} />;
         </Flex>
-      // </Container>
     );
   }
 
   if (isError) {
     return <span>Error: {error.message}</span>;
   }
-  if (isSuccess) {
-    const renderedGoods = data.map(image => {
-      return <div><BookItem images={image} /></div>
-    })
-  
-    return <div>{renderedGoods}</div>
+  if (data) {
+    return (<div className="band">
+    { _.map(data,(data, index) => { return <BookItem data={data} ind={index} />})}</div>
+  )
   }
   
 };
+
+const BookItem = ({data, ind}) => {
+  return (
+        <div className={"item-" + (Number(ind)+1).toString()}>
+          <a href={data.url} className="card">
+            <div className="thumb" style={{ backgroundImage: `url(${data.urlToImage})` }} />
+            <article>
+              <h1>{data.title}</h1>
+              <span>{data.author}</span>
+            </article>
+          </a>
+        </div>
+  )}
