@@ -16,7 +16,7 @@
         "axios": "^0.21.1",
         "babel-preset-react": "^6.24.1",
         "classnames": "^2.2.6",
-        "firebase": "^8.3.1",
+        "firebase": "^8.6.7",
         "firebase-admin": "^9.9.0",
         "firebase-functions": "^3.13.2",
         "gatsby": "^2.19.7",
@@ -88,5 +88,15 @@
     },
     "author": "",
     "license": "ISC",
-    "homepage": ""
+    "homepage": "",
+    "browser": {
+        "fs": false,
+        "path": false,
+        "os": false,
+        "http": false,
+        "https": false,
+        "net": false,
+        "stream": false,
+        "tls": false
+    }
 }

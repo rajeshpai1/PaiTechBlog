@@ -2,23 +2,42 @@ import { Flex } from "rebass/styled-components";
 import { useQuery } from "react-query";
 import { getAllBooks } from "../App/api";
 import Loader from "react-loader-spinner";
-import React  from 'react';
+import React, { useState, useEffect } from 'react';
 import * as _ from 'lodash';
+import firebase from "../apis/firebase/firebase"
+
+const db = firebase.database();
 
 export const BooksList = () => {
-  const { data, error, isLoading, isError } = useQuery("articles", getAllBooks);
+  const [data, SetData] = useState([])
+  useEffect(()=>
+  { 
+    db.ref('articles').once('value').then((snapshot) => {
+      // var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
+      if (snapshot.exists()) {
+        console.log(snapshot.val())
+        SetData(snapshot.val())
+      } else {
+        console.log("No data available");
+      }
+    }).catch((error) => {
+      console.error(error);
+    });
 
-  if (isLoading) {
-    return (
-        <Flex py="5" justifyContent="center">
-          <Loader type="ThreeDots" color="#cccccc" height={30} />;
-        </Flex>
-    );
-  }
+  }, [])
 
-  if (isError) {
-    return <span>Error: {error.message}</span>;
-  }
+  // const { data, error, isLoading, isError } = useQuery("articles", getArticles);
+  // if (isLoading) {
+  //   return (
+  //       <Flex py="5" justifyContent="center">
+  //         <Loader type="ThreeDots" color="#cccccc" height={30} />;
+  //       </Flex>
+  //   );
+  // }
+
+  // if (isError) {
+  //   return <span>Error: {error.message}</span>;
+  // }
   if (data) {
     return (<div className="band">
     { _.map(data,(data, index) => { return <BookItem data={data} ind={index} />})}</div>

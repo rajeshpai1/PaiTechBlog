@@ -5,11 +5,11 @@ import 'styles/styles.css';
 import 'styles/animate.css';
 import Page from '../components/Page';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
-import App from "../App/App.js";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "styled-components"
-import preset from '@rebass/preset'
+// import preset from '@rebass/preset'
+import App from "../App/App.js"
 
 
 const queryClient = new QueryClient();
@@ -20,11 +20,11 @@ const IndexPage = () => {
     <Page>
       <Layout.Content>
         <QueryClientProvider client={queryClient}>
-        <ThemeProvider theme={preset}>
+        {/* <ThemeProvider theme={preset}> */}
           <BrowserRouter>
             <App />
           </BrowserRouter>
-        </ThemeProvider>
+        {/* </ThemeProvider> */}
       </QueryClientProvider>
       </Layout.Content>
     </Page>
