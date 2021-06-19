@@ -1,7 +1,5 @@
-import { BooksList } from "../BooksList";
-import { BookItem } from "../BookItem"
-// import { CreateBook } from "./CreateBook";
-// import { UpdateBook } from "./UpdateBook";
+import  PostList  from "../components/Posts/Posts";
+import  Post  from "../components/Post/Post";
 import React, { Component }  from 'react';
 import { Switch, Route } from "react-router-dom";
 
@@ -17,10 +15,10 @@ function App() {
           <UpdateBook />
         </Route> */}
         <Route path="/">
-          <BooksList />
+          <PostList />
         </Route>
-        <Route path="/BookItem">
-          <BookItem />
+        <Route path="/Post">
+          <Post />
         </Route>
       </Switch>
     </>

@@ -6,7 +6,8 @@ import Page from '../components/Page';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { BrowserRouter } from "react-router-dom";
-import PostList from "../components/Posts/Posts"
+import App from "../App/App"
+import  Post  from "../components/Post/Post";
 
 
 const queryClient = new QueryClient();
@@ -17,9 +18,11 @@ const IndexPage = () => {
     <Page>
       <Layout.Content>
         <QueryClientProvider client={queryClient}>
+        {/* <ThemeProvider theme={preset}> */}
           <BrowserRouter>
-            <PostList />
+            <Post />
           </BrowserRouter>
+        {/* </ThemeProvider> */}
       </QueryClientProvider>
       </Layout.Content>
     </Page>
