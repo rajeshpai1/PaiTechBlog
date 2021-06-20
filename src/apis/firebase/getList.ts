@@ -14,7 +14,22 @@ const  getList = () => {
 
 }
 
-export default getList
+const  getPost = () => { 
+    return new Promise<T>(resolve => {
+        db.ref('articles')
+        .orderByChild('title')
+        .equalTo("Las ‘startups’ se suben a la alta velocidad de la ciberinteligencia")
+        .once('value')
+        .then((snapshot :any) => {
+            console.log('asdasdasdasdadsadsasdasd',snapshot.val())
+            debugger
+            resolve(Object.values(snapshot.val())[0]);
+          },
+        );
+    });
+
+};
+export {getList, getPost};
 
 
 

@@ -2,18 +2,22 @@ import { useQuery } from "react-query";
 // import { getAllBooks } from "../App/api";
 import React, { useState, useEffect } from 'react';
 import * as _ from 'lodash';
-import getList from "apis/firebase/getList";
+import {getPost} from "apis/firebase/getList";
 // import loader from "../components/loader/loader.js"
 import { Flex } from "rebass/styled-components";
 import Loader from "react-loader-spinner";
 
 const Post = () => {
-  const { data, error, isLoading, isError } = useQuery("articles", getList);
-  if (isLoading) {
-    return (
-    <Flex py="5" justifyContent="center">
-    <Loader type="ThreeDots" color="#cccccc" height={30} />;
-  </Flex>
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get('id');
+    console.log('sdfsdfsfdsdfsdf',id)
+
+    const { data, error, isLoading, isError } = useQuery("articles", getPost);
+    if (isLoading) {
+        return (
+        <Flex py="5" justifyContent="center">
+        <Loader type="ThreeDots" color="#cccccc" height={30} />;
+    </Flex>
 );
 }
 
@@ -23,24 +27,24 @@ const Post = () => {
   if (data) {
     return (
       <div className="band">
-      { _.map([data[0]],(data, index) => { return <BookItem5 data={data} ind={index} />})}</div>
-  )
+     {<PostItem data={data} />}</div>  )
   }
   
 };
 
-const BookItem5 = ({data, ind} : any) => {
-  return (
-        <div className={"item-" + (Number(ind)+1).toString()}>
-          <a href={`/post/${ind}`} className="card">
-            <div className="thumb" style={{ backgroundImage: `url(${data.urlToImage})` }} />
-            <article>
-              <h1>{data.title}</h1>
-              <span>{data.author}</span>
-            </article>
-          </a>
-        </div>
-  )}
+const PostItem = ({data} : any) => {
+    return (
+          <div className={"item-1"}>
+            <a className="card">
+              <div className="thumb" style={{ backgroundImage: `url(${data.urlToImage})` }} />
+              <article>
+                <h1>{data.title}</h1>
+                <span>{data.author}</span>
+                <p>{data.content}</p>
+              </article>
+            </a>
+          </div>
+    )}
 
 export default Post ;
 

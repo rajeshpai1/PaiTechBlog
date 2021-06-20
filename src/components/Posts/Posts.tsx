@@ -2,12 +2,13 @@ import { useQuery } from "react-query";
 // import { getAllBooks } from "../App/api";
 import React, { useState, useEffect } from 'react';
 import * as _ from 'lodash';
-import getList from "apis/firebase/getList";
+import {getList} from "apis/firebase/getList";
 // import loader from "../components/loader/loader.js"
 import { Flex } from "rebass/styled-components";
 import Loader from "react-loader-spinner";
 
 const PostList = () => {
+
   const { data, error, isLoading, isError } = useQuery("articles", getList);
   if (isLoading) {
     return (
@@ -23,13 +24,13 @@ const PostList = () => {
   if (data) {
     return (
       <div className="band">
-      { _.map(data,(data, index) => { return <BookItem5 data={data} ind={index} />})}</div>
+      { _.map(data,(data, index) => { return <Posts data={data} ind={index} />})}</div>
   )
   }
   
 };
 
-const BookItem5 = ({data, ind} : any) => {
+const Posts = ({data, ind} : any) => {
   return (
         <div className={"item-" + (Number(ind)+1).toString()}>
           <a href={`/post/${ind}`} className="card">

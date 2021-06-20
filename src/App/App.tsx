@@ -17,7 +17,7 @@ function App() {
         <Route path="/">
           <PostList />
         </Route>
-        <Route path="/Post">
+        <Route path="/Post/{id}">
           <Post />
         </Route>
       </Switch>
