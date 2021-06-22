@@ -3,15 +3,12 @@ import { useQuery } from "react-query";
 import React, { useState, useEffect } from 'react';
 import * as _ from 'lodash';
 import {getPost} from "apis/firebase/getList";
-// import loader from "../components/loader/loader.js"
 import { Flex } from "rebass/styled-components";
 import Loader from "react-loader-spinner";
 
 const Post = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('id');
-    console.log('sdfsdfsfdsdfsdf',id)
-
     const { data, error, isLoading, isError } = useQuery("articles", getPost);
     if (isLoading) {
         return (
