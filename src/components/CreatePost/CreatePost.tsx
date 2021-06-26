@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
-import { Editor } from '@tinymce/tinymce-react';
 import {  Upload, Button  } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
+import { Editor } from '@tinymce/tinymce-react';
 import { pushPost, pushImage } from 'apis/firebase/pushPost';
 import { useQuery } from 'react-query';
 import { AnyARecord } from 'dns';
@@ -45,18 +45,13 @@ import { AnyARecord } from 'dns';
            /* enable automatic uploads of images represented by blob or data URIs*/
            automatic_uploads: true,
            file_picker_types: 'image',
-           file_picker_callback: function (callback, value, meta) {
-            if (meta.filetype == 'image') {
-                var input = document.getElementById('my-file');
-                input.click();
-                input.onchange = async function () {
-                    var file = input.files[0];
-                    var res = await pushImage(file)
-                    console.log(res)
-                    callback(res.data.secure_url)
-                };
-            }
-        },
+           images_upload_handler: async function (blobInfo, success, failure) {
+            var formData = new FormData();
+            formData.append('file', blobInfo.blob(), blobInfo.filename());
+            formData.append('upload_preset', 'x2njw8oz');
+            var res = await pushImage(formData);
+            res.status==200 ? success(res.data.secure_url) : failure(res.data.status)}
+          ,
           paste_data_images: true,
   
            content_style: 'editor { background-color: #d8e3fa; padding-right: 150px; font-family:Helvetica,Arial,sans-serif; font-size:14px}'

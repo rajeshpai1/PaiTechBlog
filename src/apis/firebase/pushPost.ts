@@ -7,13 +7,13 @@ const PERMISSION_DENIED_STATUS_CODE = 'PERMISSION_DENIED';
 
 const pushImage = (_file:any) => { 
     return new Promise<T>(async resolve => {
-        const data = new FormData();
-        data.append('file', _file);
-        data.append('upload_preset', 'byw6v1nx');
+        // const data = new FormData();
+        // data.append('file', _file);
+        // data.append('upload_preset', 'x2njw8oz');
         const res = await axios({
             method: 'post',
-            url: `${new URL("https://api.cloudinary.com/v1_1/dgzls16bt/image/upload/TechBlog")}`,
-            data: data
+            url: `${new URL("https://api.cloudinary.com/v1_1/dgzls16bt/image/upload")}`,
+            data: _file
           });;
         console.log(res);
         resolve(res);
