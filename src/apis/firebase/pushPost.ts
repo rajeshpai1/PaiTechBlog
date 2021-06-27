@@ -22,8 +22,11 @@ const pushImage = (_file:any) => {
 
 }
 
-const  pushPost = (file: any, text: any) => { 
+const  pushPost = (content: any) => { 
     return new Promise<T>(resolve => {
+
+        var file = content.getContent()
+        var text = content.getContent({ format: "text" }) 
         var ar = text.split('\n')
         var title = ar[0]
         console.log(text)
@@ -34,7 +37,9 @@ const  pushPost = (file: any, text: any) => {
             context
         }
         );
-        resolve(response)
+        resolve(db.ref().child('articles1').push().key)
+        return response
+
     });
 
 }

@@ -1,22 +1,25 @@
 import React, { useRef, useState } from 'react';
-import {  Upload, Button  } from 'antd';
+import {  Upload, Button, Space, Spin  } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { Editor } from '@tinymce/tinymce-react';
 import { pushPost, pushImage } from 'apis/firebase/pushPost';
-import { useQuery } from 'react-query';
+import { useMutation } from 'react-query';
 import { AnyARecord } from 'dns';
+import { useHistory } from 'react-router-dom';
 
  export default function CreatePost(): any {
    const editorRef = useRef(null);
+   const history = useHistory()
+   const { data:dataa, mutateAsync, isLoading, isError, isSuccess, error } = useMutation(pushPost)
+ 
    const log = async () => {
-     if (editorRef.current) {
-      //  console.log(editorRef.current.g etContent());
-      console.log('uploading')
-      var content = editorRef.current
-      var resp = await pushPost(content.getContent(), content.getContent({ format: "text" }))
-      console.log('Content was updated upload done', resp);
-     }
-   };
+    if (editorRef.current) {
+     var content = editorRef.current
+     var response = await mutateAsync(content)
+     console.log('key', response)
+     history.push("/")
+    }
+   }
    return (
      <>
      <div style={{paddingLeft: "15vw"}}>
@@ -57,9 +60,20 @@ import { AnyARecord } from 'dns';
            content_style: 'editor { background-color: #d8e3fa; padding-right: 150px; font-family:Helvetica,Arial,sans-serif; font-size:14px}'
          }}
        />
-        <button onClick={log}>Log editor content</button>
-        <input  type="file" id="my-file" name="my-file" />
-        </div>
+        <Button onClick={log} >Add Post</Button>
+      {isLoading ? (
+        <Space size="middle">
+        <Spin size="large" />
+      </Space>
+      ) : (
+        <>
+          {isError ? (
+            <div>An error occurred: {error.message}</div>
+          ) : null}
+          {isSuccess ? <div>Todo added! {dataa}</div> : null}
+        </>
+      )}
+    </div>
      </>
    );
  }
