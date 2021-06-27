@@ -15,7 +15,6 @@ const pushImage = (_file:any) => {
             url: `${new URL("https://api.cloudinary.com/v1_1/dgzls16bt/image/upload")}`,
             data: _file
           });;
-        console.log(res);
         resolve(res);
         return res
     });
@@ -24,22 +23,26 @@ const pushImage = (_file:any) => {
 
 const  pushPost = (content: any) => { 
     return new Promise<T>(resolve => {
-
         var file = content.getContent()
         var text = content.getContent({ format: "text" }) 
+
+        var ele = document.createElement("div");
+        ele.innerHTML = file;
+        var image = ele.querySelector("img");
+        var thumb_image = image ? image.src : 'https://res.cloudinary.com/dgzls16bt/image/upload/v1624810309/TechBlog/zmsoqvrgngcb239fey4h.png'
+
         var ar = text.split('\n')
         var title = ar[0]
-        console.log(text)
         var context = ar.slice(1,10).join(" ").split(" ", 100).join(" ")
         var response = db.ref().child('articles1').push().set({
             file,
             title,
-            context
+            context,
+            thumb_image
         }
         );
+        console.log(db.ref().child('articles1').push().key)
         resolve(db.ref().child('articles1').push().key)
-        return response
-
     });
 
 }
