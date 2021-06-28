@@ -14,15 +14,13 @@ const  getList = () => {
 
 }
 
-const  getPost = () => { 
+const  getPost = (id:string) => { 
     return new Promise<T>(resolve => {
-        db.ref('articles')
-        .orderByChild('title')
-        .equalTo("Las ‘startups’ se suben a la alta velocidad de la ciberinteligencia")
+        db.ref('articles1')
+        .orderByChild('id')
+        .equalTo(`${id}`)
         .once('value')
         .then((snapshot :any) => {
-            console.log('asdasdasdasdadsadsasdasd',snapshot.val())
-            debugger
             resolve(Object.values(snapshot.val())[0]);
           },
         );

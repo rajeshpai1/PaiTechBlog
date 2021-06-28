@@ -5,11 +5,11 @@ import * as _ from 'lodash';
 import {getPost} from "apis/firebase/getList";
 import { Flex } from "rebass/styled-components";
 import Loader from "react-loader-spinner";
+import { useParams } from "react-router-dom";
 
 const Post = () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get('id');
-    const { data, error, isLoading, isError } = useQuery("articles", getPost);
+    const { id } = useParams();
+    const { data, error, isLoading, isError } = useQuery(["articles", {id}], async() => await getPost(id));
     if (isLoading) {
         return (
         <Flex py="5" justifyContent="center">
@@ -23,8 +23,7 @@ const Post = () => {
   }
   if (data) {
     return (
-      <div className="band">
-     {<PostItem data={data} />}</div>  )
+      <div>{<PostItem data={data} />}</div>  )
   }
   
 };
@@ -33,11 +32,10 @@ const PostItem = ({data} : any) => {
     return (
           <div className={"item-1"}>
             <a className="card">
-              <div className="thumb" style={{ backgroundImage: `url(${data.urlToImage})` }} />
+              <div className="thumb" style={{ backgroundImage: `url(${data.thumb_image})` }} />
               <article>
                 <h1>{data.title}</h1>
-                <span>{data.author}</span>
-                <p>{data.content}</p>
+                <p>{data.file}</p>
               </article>
             </a>
           </div>
